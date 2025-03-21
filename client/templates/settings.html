@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remindini | Settings</title>
+    <link rel="stylesheet" href="../static/css/settings.css" />
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <img src="static/assets/images/logo_2.png" alt="app Logo" class="app-logo" />
+        </div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="{{ url_for('dashboard') }}">
+              <span class="icon">📊</span>
+              Dashboard
+            </a>
+          </li>
+          <li class="active">
+            <a href="{{ url_for('settings') }}">
+              <span class="icon">⚙️</span>
+              Settings
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('signout') }}">
+              <span class="icon">🔚</span>
+              Sign Out
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header / Top Bar -->
+        <header class="top-bar">
+          <div class="welcome-message">
+            <h1>Settings</h1>
+          </div>
+          <div class="user-info">
+            <img
+              src="static/assets/images/user_avatar.png"
+              alt="User Avatar"
+              class="user-avatar"
+            />
+            <span id="userName">{{username}}</span>
+          </div>
+        </header>
+
+        <!-- Settings Section -->
+        <section class="settings-section">
+          <!-- Functionalities Manipulation -->
+          <div class="functionality-manipulation">
+            <h2>Functionalities Manipulation</h2>
+
+            <!-- SMS Reminders for Google Calendar Events -->
+            <div class="functionality-item">
+                <h3>SMS Reminders for Google Calendar Events</h3>
+                <p>Enable or disable SMS reminders for Google Calendar events below.</p>
+
+                <button id="smsToggleBtn" class="btn-toggle">
+                  {% if sms_service_activated %} Disable Functionality {% else %} Enable Functionality {% endif %}
+                </button>
+
+                <!-- Reminder Delay Settings - will be hidden/shown based on toggle state -->
+                <div class="reminder-duration-item" 
+                    style="display: {% if sms_service_activated %}block{% else %}none{% endif %};">
+                  <div class="reminder-duration-form">
+                    <label for="reminderValue">Reminder before:</label>
+                    <div class="duration-inputs">
+                      <input
+                        type="number"
+                        id="reminderValue"
+                        name="reminderValue"
+                        min="1"
+                        value="{{ reminder_delay }}"
+                      />
+                      <select id="reminderUnit" name="reminderUnit">
+                        <option value="minutes" {% if reminder_unit == "minutes" %}selected{% endif %}>Minutes</option>
+                        <option value="hours" {% if reminder_unit == "hours" %}selected{% endif %}>Hours</option>
+                      </select>
+                      <button id="updateReminderBtn" class="btn-update">
+                        Update
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+
+          
+           
+         <!-- Real-Time Sensor Monitoring -->
+<div class="functionality-item">
+  <h3>Real-Time Sensors Monitoring</h3>
+  <p>
+    Enable or disable real-time sensor monitoring from connected sensors. Once enabled, 
+    you can view real-time data in the Dashboard section.
+  </p>
+  
+  <!-- Added a container div with flex row styling -->
+  <div style="display: flex; flex-direction: row; gap: 20px;">
+    <!-- Temperature Monitoring -->
+        <div class="sensor-item">
+          <h4>Temperature Monitoring</h4>
+          <p>
+            Toggle real-time Temperature monitoring from a connected sensor and set an alert threshold.
+          </p>
+          <button id="tempToggleBtn" class="btn-toggle">
+            {% if temperature_service_activate %} Disable Functionality {% else %} Enable Functionality {% endif %}
+          </button>
+          
+          <!-- Temperature Threshold Setting - will be hidden/shown based on toggle state -->
+          <div class="threshold-settings-item" id="tempThresholdSettings" 
+              style="display: {% if temperature_service_activate %}block{% else %}none{% endif %};">
+            <div class="threshold-settings-form">
+              <label for="tempThresholdValue">Alert threshold:</label>
+              <div class="threshold-inputs">
+                <input
+                  type="number"
+                  id="tempThresholdValue"
+                  name="tempThresholdValue"
+                  min="0"
+                  value="{{ temperature_treshold }}"
+                />
+                <span class="unit-label">°C</span>
+                <button id="updateTempThresholdBtn" class="btn-update">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Humidity Monitoring -->
+        <div class="sensor-item">
+          <h4>Humidity Monitoring</h4>
+          <p>
+            Toggle real-time humidity monitoring from a connected sensor and set an alert threshold.
+          </p>
+          <button id="humidityToggleBtn" class="btn-toggle">
+            {% if humidity_service_activate %} Disable Functionality {% else %} Enable Functionality {% endif %}
+          </button>
+          
+          <!-- Humidity Threshold Setting - will be hidden/shown based on toggle state -->
+          <div class="threshold-settings-item" id="humidityThresholdSettings" 
+              style="display: {% if humidity_service_activate %}block{% else %}none{% endif %};">
+            <div class="threshold-settings-form">
+              <label for="humidityThresholdValue">Alert threshold:</label>
+              <div class="threshold-inputs">
+                <input
+                  type="number"
+                  id="humidityThresholdValue"
+                  name="humidityThresholdValue"
+                  min="0"
+                  max="100"
+                  value="{{ humidity_treshold }}"
+                />
+                <span class="unit-label">%</span>
+                <button id="updateHumidityThresholdBtn" class="btn-update">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+          
+
+          <!-- Account Updates -->
+          <div class="account-updates">
+            <h2>Account Updates</h2>
+              <div class="update-item">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" id="phoneNumber" value="{{ phone_number }}">
+                <button id="updatePhoneBtn" class="btn-toggle">Update Phone Number</button>
+              </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script src="../static/js/settings.js"></script>
+
+  </body>
+</html>

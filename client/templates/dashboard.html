@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Remindini | Dashboard</title>
+        <link rel="stylesheet" href="../static/css/dashboard.css" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <img src="static/assets/images/logo_2.png" alt="app Logo" class="app-logo" />
+
+        </div>
+        <ul class="sidebar-menu">
+          <li class="active">
+            <a href="{{ url_for('dashboard') }}">
+              <span class="icon">📊</span>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('settings') }}">
+              <span class="icon">⚙️</span>
+              Settings
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('signout') }}" id="nav-signout">
+              <span class="icon">🔚</span>
+              Sign Out
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header / Top Bar -->
+        <header class="top-bar">
+          <div class="welcome-message">
+            <h1>Dashboard</h1>
+          </div>
+          <div class="user-info">
+            <img
+              src="static/assets/images/user_avatar.png"
+              alt="User Avatar"
+              class="user-avatar"
+            />
+            <span id="userName">{{username}}</span>
+          </div>
+        </header>
+
+        <!-- Content Section -->
+        <section class="cards-section">
+          <!-- Row 1: SMS Stats -->
+          <div class="top-row">
+            <div class="sms-cards">
+              <div class="card sms-success-card">
+                <h3>Number of SMS sent</h3>
+                <p id="smsSuccessCount">0 SMS</p>
+                <small>This week's statistics</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2: Temperature and Humidity Gauges -->
+          <div class="bottom-row">
+            <div class="card gauges-card">
+              <div class="gauges-header">
+                <div>
+                  <h3>Environmental Monitoring</h3>
+                  <p class="sub-title">Real-time measurements</p>
+                </div>
+                <div class="refresh-controls">
+                  <button id="refreshGaugesBtn" class="btn-update">
+                    Refresh Data
+                  </button>
+                </div>
+              </div>
+
+              <div class="gauges-container">
+                <div class="gauge-wrapper">
+                  <h4>Temperature</h4>
+                  <canvas id="tempGauge"></canvas>
+                  <div class="gauge-value">
+                    <span id="currentTemperature">--</span>°C
+                  </div>
+                  <div class="threshold-info">
+                    <span>Threshold: <span id="tempThreshold">--</span>°C</span>
+                  </div>
+                </div>
+                
+                <div class="gauge-wrapper">
+                  <h4>Humidity</h4>
+                  <canvas id="humidityGauge"></canvas>
+                  <div class="gauge-value">
+                    <span id="currentHumidity">--</span>%
+                  </div>
+                  <div class="threshold-info">
+                    <span>Threshold: <span id="humidityThreshold">--</span>%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Main JavaScript for the page -->
+    <script src="../static/js/dashboard.js"></script>
+    <input type="hidden" id="userEmail" value="{{ email }}">
+  </body>
+</html>
